@@ -16,7 +16,7 @@ composer require wtfz/laravel-route-button
 
 ## Usage
 
-Add this code in your model
+Add this code in your model and define each route buttons in array inside your model
 
 ```php
 use Wtfz\LaravelRouteButton\RouteButton;
@@ -25,25 +25,15 @@ class YourModel extends Model
 {
     use RouteButton;
 
+    protected $routeItems = [
+                            [
+                                'route' => 'admin.auth.user.edit',
+                                'text' => 'Edit User',
+                                'param' => [$this, 1], // Default: $model
+                            ],
+                            ...
+                        ];
     ...
-}
-```
-
-Add this method and define each button for each route in your model
-
-```php
-public function routeItems()
-{
-    return [
-        [
-            'route' => 'admin.auth.user.edit',
-            'text' => 'Edit User',
-            'param' => [$this, 1], // Default: $model
-        ],
-        [
-            ...
-        ]
-    ];
 }
 ```
 
@@ -51,9 +41,9 @@ Render route button in your model view (or any model loop)
 
 ```php
 {{ $model->routeButton() }}
-```
 
-```php
+// or
+
 @foreach($models as $model)
     {{ $model->routeButton() }}
 @endforeach
