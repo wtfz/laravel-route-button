@@ -1,10 +1,10 @@
-# Very short description of the package
+# Laravel Route Button
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/wtfz/laravel-route-button.svg?style=flat-square)](https://packagist.org/packages/wtfz/laravel-route-button)
 [![Total Downloads](https://img.shields.io/packagist/dt/wtfz/laravel-route-button.svg?style=flat-square)](https://packagist.org/packages/wtfz/laravel-route-button)
 ![GitHub Actions](https://github.com/wtfz/laravel-route-button/actions/workflows/main.yml/badge.svg)
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
+Laravel Route Button simplify process to generate route buttons from the model. Use it in any model views (or datatables row).
 
 ## Installation
 
@@ -16,14 +16,47 @@ composer require wtfz/laravel-route-button
 
 ## Usage
 
+Add this code in your model
+
 ```php
-// Usage description here
+use Wtfz\LaravelRouteButton\RouteButton;
+
+class YourModel extends Model
+{
+    use RouteButton;
+
+    ...
+}
 ```
 
-### Testing
+Add this method and define each button for each route in your model
 
-```bash
-composer test
+```php
+public function routeItems()
+{
+    return [
+        [
+            'route' => 'admin.auth.user.edit',
+            'text' => 'Edit User',
+            'param' => [$this, 1], // Default: $model
+        ],
+        [
+            ...
+        ]
+    ];
+}
+```
+
+Render route button in your model view (or any model loop)
+
+```php
+{{ $model->routeButton() }}
+```
+
+```php
+@foreach($models as $model)
+    {{ $model->routeButton() }}
+@endforeach
 ```
 
 ### Changelog
@@ -46,7 +79,3 @@ If you discover any security related issues, please email ahmadzaimhamzah@gmail.
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-
-## Laravel Package Boilerplate
-
-This package was generated using the [Laravel Package Boilerplate](https://laravelpackageboilerplate.com).
