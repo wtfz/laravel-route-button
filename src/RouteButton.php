@@ -2,7 +2,7 @@
 
 namespace Wtfz\LaravelRouteButton;
 
-class LaravelRouteButton
+trait RouteButton
 {
     // Build your next great package.
 }

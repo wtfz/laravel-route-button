@@ -1,6 +1,6 @@
 {
     "name": "wtfz/laravel-route-button",
-    "description": "Generate Laravel route button with dropdown from model",
+    "description": "Generate route buttons with dropdown from the model",
     "keywords": [
         "wtfz",
         "laravel-route-button"
@@ -43,10 +43,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Wtfz\\LaravelRouteButton\\LaravelRouteButtonServiceProvider"
+                "Wtfz\\LaravelRouteButton\\RouteButtonServiceProvider"
             ],
             "aliases": {
-                "LaravelRouteButton": "Wtfz\\LaravelRouteButton\\LaravelRouteButtonFacade"
+                "RouteButton": "Wtfz\\LaravelRouteButton\\RouteButtonFacade"
             }
         }
     }
