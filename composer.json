@@ -1,11 +1,11 @@
 {
-    "name": "biskoot/laravel-route-button",
+    "name": "wtfz/laravel-route-button",
     "description": "Generate Laravel route button with dropdown from model",
     "keywords": [
-        "biskoot",
+        "wtfz",
         "laravel-route-button"
     ],
-    "homepage": "https://github.com/biskoot/laravel-route-button",
+    "homepage": "https://github.com/wtfz/laravel-route-button",
     "license": "MIT",
     "type": "library",
     "authors": [
@@ -24,12 +24,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Biskoot\\LaravelRouteButton\\": "src"
+            "Wtfz\\LaravelRouteButton\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Biskoot\\LaravelRouteButton\\Tests\\": "tests"
+            "Wtfz\\LaravelRouteButton\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -43,10 +43,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Biskoot\\LaravelRouteButton\\LaravelRouteButtonServiceProvider"
+                "Wtfz\\LaravelRouteButton\\LaravelRouteButtonServiceProvider"
             ],
             "aliases": {
-                "LaravelRouteButton": "Biskoot\\LaravelRouteButton\\LaravelRouteButtonFacade"
+                "LaravelRouteButton": "Wtfz\\LaravelRouteButton\\LaravelRouteButtonFacade"
             }
         }
     }

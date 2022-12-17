@@ -1,6 +1,6 @@
 <?php
 
-namespace Biskoot\LaravelRouteButton;
+namespace Wtfz\LaravelRouteButton;
 
 use Illuminate\Support\ServiceProvider;
 

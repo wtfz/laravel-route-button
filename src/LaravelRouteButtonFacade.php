@@ -1,11 +1,11 @@
 <?php
 
-namespace Biskoot\LaravelRouteButton;
+namespace Wtfz\LaravelRouteButton;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Biskoot\LaravelRouteButton\Skeleton\SkeletonClass
+ * @see \Wtfz\LaravelRouteButton\Skeleton\SkeletonClass
  */
 class LaravelRouteButtonFacade extends Facade
 {
