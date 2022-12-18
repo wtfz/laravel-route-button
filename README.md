@@ -1,7 +1,8 @@
 # Laravel Route Button
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/wtfz/laravel-route-button.svg?style=flat-square)](https://packagist.org/packages/wtfz/laravel-route-button)
-[![Total Downloads](https://img.shields.io/packagist/dt/wtfz/laravel-route-button.svg?style=flat-square)](https://packagist.org/packages/wtfz/laravel-route-button)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/wtfz/laravel-route-button)](https://packagist.org/packages/wtfz/laravel-route-button)
+[![Total Downloads](https://img.shields.io/packagist/dt/wtfz/laravel-route-button)](https://packagist.org/packages/wtfz/laravel-route-button)
+[![License](https://img.shields.io/packagist/l/wtfz/laravel-route-button)](https://packagist.org/packages/wtfz/laravel-route-button)
 
 Generate route buttons with dropdown from the model.
 
