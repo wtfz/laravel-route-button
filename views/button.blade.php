@@ -1,6 +1,6 @@
 @if(count($routes) > 0)
     <div class="w-full flex space-x-2 space-y-2 justify-end">
-        <div class="flex items-center shadow rounded-lg overflow-hidden text-sm h-10">
+        <div class="flex items-center shadow rounded-lg overflow-hidden text-sm h-[38px]">
             @if(in_array($routes[0]->method, ['delete','patch','post']))
                 <form method="post" class="" name="{{ $routes[0]->form }}-item"
                     action="{{ $routes[0]->route }}"
@@ -12,7 +12,7 @@
                     <button type="submit"
                         class="@if(count($routes) > 1) rounded-l-lg @else rounded-lg @endif
                             bg-gray-100 hover:bg-gray-200 text-gray-500 border-gray-300
-                            appearance-none flex items-center px-4 h-10 font-semibold leading-none tracking-wide border"
+                            appearance-none flex items-center px-4 h-[38px] font-semibold leading-none tracking-wide border"
                         >
                         @lang($routes[0]->text)
                     </button>
@@ -21,7 +21,7 @@
                 <a href="{{ $routes[0]->route }}"
                     class="@if(count($routes) > 1) rounded-l-lg @else rounded-lg @endif
                         bg-gray-100 hover:bg-gray-200 text-gray-500 border-gray-300
-                        appearance-none flex items-center px-4 h-10 font-semibold leading-none tracking-wide border"
+                        appearance-none flex items-center px-4 h-[38px] font-semibold leading-none tracking-wide border"
                     >
                     @lang($routes[0]->text)
                 </a>
@@ -30,7 +30,7 @@
                 <button id="button_{{ $model->route_button_key }}"
                     class="rounded-r-lg border border-l-0
                         bg-gray-100 hover:bg-gray-200 text-gray-500 border-gray-300
-                        appearance-none flex items-center justify-center align-middle w-10 h-10"
+                        appearance-none flex items-center justify-center align-middle w-10 h-[38px]"
                     onclick="(e => {
                         let route_button_dropdown = document.getElementById('{{ $model->route_button_key }}')
                         let route_button_state = route_button_dropdown.__x.$data.{{ $model->route_button_key }}
