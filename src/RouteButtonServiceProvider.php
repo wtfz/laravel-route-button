@@ -11,11 +11,11 @@ class RouteButtonServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__.'/../views', 'route-button');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'route-button');
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../views' => resource_path('views/vendor/route-button')
+                __DIR__.'/../resources/views' => resource_path('views/vendor/route-button')
             ], 'laravel-route-button');
         }
     }

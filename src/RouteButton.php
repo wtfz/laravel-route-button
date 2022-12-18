@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 trait RouteButton
 {
     /**
-     * Current attached model
+     * Attached model.
      *
      * @var \Illuminate\Database\Eloquent\Model
      */
@@ -28,7 +28,7 @@ trait RouteButton
     }
 
     /**
-     * Get model name in snake case format
+     * Get model name in snake case format.
      *
      * @return string
      */
@@ -38,50 +38,84 @@ trait RouteButton
     }
 
     /**
-     * Get model name with id as a key
+     * Get model name with id as a toggle key.
      *
      * @return string
      */
-    public function getRouteButtonKeyAttribute()
+    public function getRouteButtonToggleAttribute()
     {
-        return $this->route_button_name .'_'. $this->model->id;
+        return 'toggle_'.$this->route_button_name .'_'. $this->model->id;
     }
 
     /**
-     * Get model name with id as a key
+     * Get model name with id as a dropdown key.
      *
+     * @return string
+     */
+    public function getRouteButtonDropdownAttribute()
+    {
+        return 'dropdown_'.$this->route_button_name .'_'. $this->model->id;
+    }
+
+    /**
+     * Prepare route link for view.
+     * 
+     * @param array $route
+     * @return object
+     */
+    public function prepareRoute($route)
+    {
+        $methods = Route::getRoutes()->getByName($route['route'])->methods();
+        $methods = is_array($methods) ? $methods : [$methods];
+
+        if( in_array( 'DELETE', $methods ) ) {
+            $route['method'] = 'delete';
+            $route['form'] = 'delete';
+        } elseif( in_array( 'PATCH', $methods ) ) {
+            $route['method'] = 'patch';
+            $route['form'] = 'confirm';
+        } elseif( in_array( 'POST', $methods ) ) {
+            $route['method'] = 'post';
+            $route['form'] = 'confirm';
+        } else {
+            $route['method'] = 'get';
+            $route['form'] = '';
+        }
+
+        if(!isset($route['args'])) {
+            $route['args'] = $this->model;
+        }
+
+        $route['route'] = route($route['route'], $route['args']);
+
+        return (object) $route;
+    }
+
+    /**
+     * Load list of routes for view.
+     * 
+     * @param string $section
      * @return array
      */
-    public function getRouteButtonDataAttribute()
+    public function loadRoute($section = '')
     {
-        $routes = [];
+        $routes = collect();
 
         if( count(static::$routeButton) > 0 ){
-            foreach( static::$routeButton as $route ) {
-                $methods = Route::getRoutes()->getByName($route['route'])->methods();
-                $methods = is_array($methods) ? $methods : [$methods];
-
-                if( in_array( 'DELETE', $methods ) ) {
-                    $route['method'] = 'delete';
-                    $route['form'] = 'delete';
-                } elseif( in_array( 'PATCH', $methods ) ) {
-                    $route['method'] = 'patch';
-                    $route['form'] = 'confirm';
-                } elseif( in_array( 'POST', $methods ) ) {
-                    $route['method'] = 'post';
-                    $route['form'] = 'confirm';
+            foreach( static::$routeButton as $key => $route ) {
+                if (empty($section)) {
+                    if (is_numeric($key)) {
+                        $routes->push($this->prepareRoute($route));
+                    }
                 } else {
-                    $route['method'] = 'get';
-                    $route['form'] = '';
+                    if ($section == $key) {
+                        foreach($route as $_route) {
+                            if(is_array($_route)) {
+                                $routes->push($this->prepareRoute($_route));
+                            }
+                        }
+                    }
                 }
-
-                if(!isset($route['param'])) {
-                    $route['param'] = $this->model;
-                }
-
-                $route['route'] = route($route['route'], $route['param']);
-
-                array_push($routes, (object) $route);
             }
         }
 
@@ -90,13 +124,14 @@ trait RouteButton
 
     /**
      * Render route button view
-     *
+     * 
+     * @param string $section
      * @return array
      */
-    public function routeButton()
+    public function routeButton($section = '')
     {
         return view('route-button::button')
                     ->with('model', $this->model)
-                    ->with('routes', $this->route_button_data);
+                    ->with('routes', $this->loadRoute($section));
     }
 }
