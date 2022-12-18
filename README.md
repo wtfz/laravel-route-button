@@ -16,12 +16,13 @@ composer require wtfz/laravel-route-button
 
 ## Customization
 
-[SweetAlert2](https://github.com/sweetalert2/sweetalert2) modal was used when clicking any routes with DELETE, PATCH or POST method.
+[SweetAlert2](https://github.com/sweetalert2/sweetalert2) modal triggered when clicking any routes with `DELETE`, `PATCH` or `POST` method.
 
-To customize (or remove SweetAlert2 dependency), publish and edit the component (`resources/views/vendor/route-button`).
+To customize (or remove SweetAlert2), publish and edit the component.
 
 ```php
 php artisan vendor:publish --tag=laravel-route-button
+// resources/views/vendor/route-button
 ```
 
 ## Usage
@@ -36,7 +37,7 @@ class YourModel extends Model
     use RouteButton;
 
     // global route button
-    protected $routeButton = [
+    protected static $routeButton = [
             [
                 'route' => 'admin.auth.user.edit',
                 'text' => 'Edit User',
@@ -46,7 +47,7 @@ class YourModel extends Model
         ];
 
     // or named route button
-    protected $routeButton = [
+    protected static $routeButton = [
             'index' => [
                 'route' => 'admin.auth.user.edit',
                 'text' => 'Edit User'
@@ -59,7 +60,7 @@ class YourModel extends Model
         ];
 
     // or mixed route button
-    protected $routeButton = [
+    protected static $routeButton = [
             [
                 'route' => 'admin.auth.user.edit',
                 'text' => 'Edit User',
@@ -78,7 +79,7 @@ class YourModel extends Model
 }
 ```
 
-Render route button inside your view. Links render (global, named, mixed) depends on definition of $routeButton in your model.
+Render route button inside your view.
 
 ```php
 // global route button
@@ -100,8 +101,8 @@ Render route button inside your view. Links render (global, named, mixed) depend
 // or in Livewire table...
 
 Column::make(__('Actions'), 'id')
-    ->format(function ($value, $column, $row) {
-        return $column->routeButton('index');
+    ->format(function ($value, $row, $column) {
+        return $row->routeButton('index');
     }),
 ```
 
