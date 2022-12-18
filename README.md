@@ -6,6 +6,11 @@
 
 Laravel Route Button simplify process to generate route buttons from the model. Use it in any model views (or datatables row).
 
+## Requirements
+
+- [Laravel 8](https://laravel.com)
+- [rappasoft/laravel-boilerplate (version 8)](https://www.github.com/rappasoft/laravel-boilerplate/)
+
 ## Installation
 
 You can install the package via composer:
@@ -25,15 +30,14 @@ class YourModel extends Model
 {
     use RouteButton;
 
-    protected $routeItems = [
+    protected $routeButton = [
                             [
                                 'route' => 'admin.auth.user.edit',
                                 'text' => 'Edit User',
                                 'param' => [$this, 1], // Default: $model
                             ],
-                            ...
+                            // ...
                         ];
-    ...
 }
 ```
 
@@ -47,6 +51,13 @@ Render route button in your model view (or any model loop)
 @foreach($models as $model)
     {{ $model->routeButton() }}
 @endforeach
+
+// or in Livewire table
+
+Column::make(__('Actions'), 'id')
+    ->format(function ($value, $column, $row) {
+        return $column->routeButton();
+    }),
 ```
 
 ### Changelog

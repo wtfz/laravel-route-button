@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @see \Wtfz\LaravelRouteButton\Skeleton\SkeletonClass
  */
-class LaravelRouteButtonFacade extends Facade
+class RouteButtonFacade extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -16,6 +16,6 @@ class LaravelRouteButtonFacade extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'laravel-route-button';
+        return 'route-button';
     }
 }
