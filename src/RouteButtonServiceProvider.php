@@ -23,9 +23,6 @@ class RouteButtonServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // Register the main class to use with the facade
-        $this->app->singleton('route-button', function () {
-            return new RouteButton;
-        });
+        //
     }
 }

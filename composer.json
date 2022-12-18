@@ -27,10 +27,7 @@
         "laravel": {
             "providers": [
                 "Wtfz\\LaravelRouteButton\\RouteButtonServiceProvider"
-            ],
-            "aliases": {
-                "RouteButton": "Wtfz\\LaravelRouteButton\\RouteButtonFacade"
-            }
+            ]
         }
     }
 }
