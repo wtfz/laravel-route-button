@@ -2,9 +2,8 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/wtfz/laravel-route-button.svg?style=flat-square)](https://packagist.org/packages/wtfz/laravel-route-button)
 [![Total Downloads](https://img.shields.io/packagist/dt/wtfz/laravel-route-button.svg?style=flat-square)](https://packagist.org/packages/wtfz/laravel-route-button)
-![GitHub Actions](https://github.com/wtfz/laravel-route-button/actions/workflows/main.yml/badge.svg)
 
-Laravel Route Button simplify process to generate route buttons from the model. Use it in any model views (or datatables row).
+Generate route buttons with dropdown from the model.
 
 ## Requirements
 
