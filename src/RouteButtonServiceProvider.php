@@ -11,11 +11,11 @@ class RouteButtonServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'route-button');
+        $this->loadViewsFrom(__DIR__.DIRECTORY_SEPARATOR.'views', 'route-button');
 
         $this->publishes([
-            __DIR__.'/../resources/views' => resource_path('views/vendor/route-button'),
-        ], 'views');
+            __DIR__.DIRECTORY_SEPARATOR.'views' => base_path('resources/views/vendor/route-button')
+        ]);
     }
 
     /**
