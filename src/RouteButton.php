@@ -95,7 +95,7 @@ trait RouteButton
      */
     public function routeButton()
     {
-        return view('route-button::route-button')
+        return view('route-button::button')
                     ->with('model', $this->model)
                     ->with('routes', $this->route_button_data);
     }
