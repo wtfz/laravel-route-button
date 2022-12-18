@@ -11,7 +11,8 @@ Generate route buttons with dropdown from the model.
 ## Requirements
 
 - [Laravel 8](https://laravel.com)
-- [rappasoft/laravel-boilerplate (version 8)](https://www.github.com/rappasoft/laravel-boilerplate/)
+- [AlpineJS](https://github.com/alpinejs/alpine)
+- [Tailwind](https://github.com/tailwindlabs/tailwindcss) (optional)
 
 ## Installation
 
@@ -21,7 +22,7 @@ composer require wtfz/laravel-route-button
 
 ## Usage
 
-Add this code in your model and define each route buttons inside your model
+Add this code in your model and define each route buttons inside your model.
 
 ```php
 use Wtfz\LaravelRouteButton\RouteButton;
@@ -41,7 +42,7 @@ class YourModel extends Model
 }
 ```
 
-Render route button inside your view
+Render route button inside your view.
 
 ```php
 {{ $model->routeButton() }}
@@ -58,6 +59,14 @@ Column::make(__('Actions'), 'id')
     ->format(function ($value, $column, $row) {
         return $column->routeButton();
     }),
+```
+
+## Customization
+
+Route button uses [Tailwind](https://github.com/tailwindlabs/tailwindcss) framework. To use other UI framework, publish the component (located in `resources/views/vendor/route-button`) and change the classes in each element.
+
+```php
+php artisan vendor:publish --tag=laravel-route-button
 ```
 
 ## License

@@ -1,29 +1,29 @@
 @if(count($routes) > 0)
     <div class="w-full flex space-x-2 space-y-2 justify-end">
         <div class="flex items-center shadow rounded-lg overflow-hidden text-sm h-10">
-            @if(in_array($routes[0]['method'], ['delete','patch','post']))
-                <form method="post" class="" name="{{ $routes[0]['form'] }}-item"
-                    action="{{ $routes[0]['route'] }}"
+            @if(in_array($routes[0]->method, ['delete','patch','post']))
+                <form method="post" class="" name="{{ $routes[0]->form }}-item"
+                    action="{{ $routes[0]->route }}"
                     >
                     @csrf
-                    @if(in_array($routes[0]['method'], ['delete','patch']))
-                        @method($routes[0]['method'])
+                    @if(in_array($routes[0]->method, ['delete','patch']))
+                        @method($routes[0]->method)
                     @endif
                     <button type="submit"
                         class="@if(count($routes) > 1) rounded-l-lg @else rounded-lg @endif
                             bg-gray-100 hover:bg-gray-200 text-gray-500 border-gray-300
                             appearance-none flex items-center px-4 h-10 font-semibold leading-none tracking-wide border"
                         >
-                        @lang($routes[0]['text'])
+                        @lang($routes[0]->text)
                     </button>
                 </form>
             @else
-                <a href="{{ $routes[0]['route'] }}"
+                <a href="{{ $routes[0]->route }}"
                     class="@if(count($routes) > 1) rounded-l-lg @else rounded-lg @endif
                         bg-gray-100 hover:bg-gray-200 text-gray-500 border-gray-300
                         appearance-none flex items-center px-4 h-10 font-semibold leading-none tracking-wide border"
                     >
-                    @lang($routes[0]['text'])
+                    @lang($routes[0]->text)
                 </a>
             @endif
             @if(count($routes) > 1)
@@ -61,27 +61,27 @@
                     >
                     <li class="flex flex-col divide-gray-200 divide-y">
                         @foreach($routes as $route)
-                            @if(in_array($route['method'], ['delete','patch','post']))
-                                <form method="post" class="" name="{{ $route['form'] }}-item"
-                                    action="{{ $route['route'] }}"
+                            @if(in_array($route->method, ['delete','patch','post']))
+                                <form method="post" class="" name="{{ $route->form }}-item"
+                                    action="{{ $route->route }}"
                                     >
                                     @csrf
-                                    @if(in_array($route['method'], ['delete','patch']))
-                                        @method($route['method'])
+                                    @if(in_array($route->method, ['delete','patch']))
+                                        @method($route->method)
                                     @endif
                                     <button type="submit"
                                         class="block items-center text-center w-full px-4 py-2 font-semibold
                                             hover:bg-gray-100 hover:text-gray-800"
                                         >
-                                        @lang($route['text'])
+                                        @lang($route->text)
                                     </button>
                                 </form>
                             @else
-                                <a href="{{ $route['route'] }}"
+                                <a href="{{ $route->route }}"
                                     class="block items-center text-center w-full px-4 py-2 font-semibold
                                         hover:bg-gray-100 hover:text-gray-800"
                                     >
-                                    @lang($route['text'])
+                                    @lang($route->text)
                                 </a>
                             @endif
                         @endforeach

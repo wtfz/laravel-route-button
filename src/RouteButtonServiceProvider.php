@@ -16,7 +16,7 @@ class RouteButtonServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__.'/../views' => resource_path('views/vendor/route-button')
-            ], 'views');
+            ], 'laravel-route-button');
         }
     }
 

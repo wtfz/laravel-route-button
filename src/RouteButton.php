@@ -81,7 +81,7 @@ trait RouteButton
 
                 $route['route'] = route($route['route'], $route['param']);
 
-                array_push($routes, $route);
+                array_push($routes, (object) $route);
             }
         }
 
