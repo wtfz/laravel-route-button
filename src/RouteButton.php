@@ -11,30 +11,13 @@ use Illuminate\Support\Str;
 trait RouteButton
 {
     /**
-     * Attached model.
-     *
-     * @var \Illuminate\Database\Eloquent\Model
-     */
-    protected $model;
-
-    /**
-     * Create a new child relationship instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->model = $this;
-    }
-
-    /**
      * Get model name in snake case format.
      *
      * @return string
      */
     public function getRouteButtonNameAttribute()
     {
-        return Str::snake( class_basename( get_class( $this->model ) ) );
+        return Str::snake( class_basename( get_class( $this ) ) );
     }
 
     /**
@@ -44,7 +27,7 @@ trait RouteButton
      */
     public function getRouteButtonToggleAttribute()
     {
-        return 'toggle_'.$this->route_button_name .'_'. $this->model->id;
+        return 'toggle_'.$this->route_button_name .'_'. $this->id;
     }
 
     /**
@@ -54,7 +37,7 @@ trait RouteButton
      */
     public function getRouteButtonDropdownAttribute()
     {
-        return 'dropdown_'.$this->route_button_name .'_'. $this->model->id;
+        return 'dropdown_'.$this->route_button_name .'_'. $this->id;
     }
 
     /**
@@ -83,7 +66,7 @@ trait RouteButton
         }
 
         if(!isset($route['args'])) {
-            $route['args'] = $this->model;
+            $route['args'] = $this;
         }
 
         $route['route'] = route($route['route'], $route['args']);
@@ -131,7 +114,7 @@ trait RouteButton
     public function routeButton($section = '')
     {
         return view('route-button::button')
-                    ->with('model', $this->model)
+                    ->with('model', $this)
                     ->with('routes', $this->loadRoute($section));
     }
 }
