@@ -173,7 +173,7 @@
                 position: absolute;
                 right: 0.5rem;
                 z-index: 10;
-                width: 11rem;
+                min-width: 11rem;
             }
             .route-btn-wrapper .route-btn-dropdown {
                 overflow: hidden;
