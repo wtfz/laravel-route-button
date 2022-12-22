@@ -2,7 +2,7 @@
     <div class="route-btn-wrapper">
         <div class="route-btn-container">
             @if(in_array($routes->first()->method, ['delete','patch','post']))
-                <form method="post" class="" name="{{ $routes->first()->form }}-alert" action="{{ $routes->first()->route }}">
+                <form method="post" class="route-btn-form" name="{{ $routes->first()->form }}-alert" action="{{ $routes->first()->route }}">
                     @csrf
                     @if(in_array($routes->first()->method, ['delete','patch']))
                         @method($routes->first()->method)
@@ -229,10 +229,10 @@
                     lrb_dropdown.style.display = 'none';
                 }
             }
-            document.querySelector('body').addEventListener('submit', function(e) {
-                e.preventDefault()
-
+            document.querySelector('body .route-btn-form').addEventListener('submit', function(e) {
                 if (e.target.getAttribute('name') === 'delete-alert') {
+                    e.preventDefault()
+
                     Swal.fire({
                         title: 'Confirm Action',
                         html: 'Are you sure you want to delete this item?',
@@ -247,6 +247,8 @@
                     });
                 }
                 if (e.target.getAttribute('name') === 'confirm-alert') {
+                    e.preventDefault()
+
                     Swal.fire({
                         title: 'Confirm Action',
                         html: 'Are you sure you want to do this?',
