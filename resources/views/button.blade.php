@@ -229,7 +229,7 @@
                     lrb_dropdown.style.display = 'none';
                 }
             }
-            document.querySelector('body .route-btn-form').addEventListener('submit', function(e) {
+            document.querySelector('body').addEventListener('submit', function(e) {
                 if (e.target.getAttribute('name') === 'delete-alert') {
                     e.preventDefault()
 
