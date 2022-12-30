@@ -36,8 +36,11 @@ class YourModel extends Model
 {
     use RouteButton;
 
-    // global route button
-    protected static $routeButton = [
+    // init empty route button
+    public static $routeButton = [];
+
+    // or init global route button
+    public static $routeButton = [
             [
                 'route' => 'admin.auth.user.edit',
                 'text' => 'Edit User',
@@ -46,8 +49,8 @@ class YourModel extends Model
             // ...
         ];
 
-    // or named route button
-    protected static $routeButton = [
+    // or init named route button
+    public static $routeButton = [
             'index' => [
                 'route' => 'admin.auth.user.edit',
                 'text' => 'Edit User'
@@ -59,8 +62,8 @@ class YourModel extends Model
             // ...
         ];
 
-    // or mixed route button
-    protected static $routeButton = [
+    // or init mixed route button
+    public static $routeButton = [
             [
                 'route' => 'admin.auth.user.edit',
                 'text' => 'Edit User',
@@ -79,7 +82,7 @@ class YourModel extends Model
 }
 ```
 
-Render route button inside your view.
+Render route button inside your view by calling it from your model.
 
 ```php
 // global route button
@@ -88,20 +91,21 @@ Render route button inside your view.
 // named route button
 {{ $model->routeButton('index') }}
 
-// or...
-
-@foreach($models as $model)
-    // global route button
-    {{ $model->routeButton() }}
-
-    // named route button
-    {{ $model->routeButton('edit') }}
-@endforeach
-
 // or in Livewire table...
-
 Column::make(__('Actions'), 'id')
     ->format(function ($value, $row, $column) {
+        return $row->routeButton('index');
+    }),
+
+// or add new route button on the fly...
+Column::make(__('Actions'), 'id')
+    ->format(function ($value, $row, $column) {
+        $row::$routeButton['index'][] = [
+            'route' => 'admin.auth.user.delete',
+            'text' => 'Delete User',
+            'args' => ['type' => 'member', 'user' => $row],
+        ];
+
         return $row->routeButton('index');
     }),
 ```
