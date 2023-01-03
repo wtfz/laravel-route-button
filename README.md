@@ -16,9 +16,7 @@ composer require wtfz/laravel-route-button
 
 ## Customization
 
-[SweetAlert2](https://github.com/sweetalert2/sweetalert2) modal triggered when clicking any routes with `DELETE`, `PATCH` or `POST` method.
-
-To customize (or remove SweetAlert2), publish and edit the component.
+To customize, publish and edit the component.
 
 ```php
 php artisan vendor:publish --tag=laravel-route-button
@@ -42,8 +40,9 @@ class YourModel extends Model
     // or init global route button
     public static $routeButton = [
             [
-                'route' => 'admin.auth.user.edit',
-                'text' => 'Edit User',
+                'route' => 'admin.auth.user.delete',
+                'text' => 'Delete User',
+                'view' => 'frontend.profile.confirm',
                 'args' => [$this, 1], // Optional, default: $model
             ],
             // ...
@@ -89,18 +88,26 @@ Render route button inside your view by calling it from your model.
 {{ $model->routeButton() }}
 
 // named route button
-{{ $model->routeButton('index') }}
+{{ $model->routeButton('edit') }}
 
 // or in Livewire table...
 Column::make(__('Actions'), 'id')
     ->format(function ($value, $row, $column) {
-        return $row->routeButton('index');
+        return $row->routeButton('edit');
     }),
 
 // or add new route button on the fly...
 Column::make(__('Actions'), 'id')
     ->format(function ($value, $row, $column) {
-        $row::$routeButton['index'][] = [
+        // for global route (set integer index)
+        $row::$routeButton[0][] = [
+            'route' => 'admin.auth.user.delete',
+            'text' => 'Delete User',
+            'args' => ['type' => 'member', 'user' => $row],
+        ];
+
+        // for named route (set string index)
+        $row::$routeButton['edit'][] = [
             'route' => 'admin.auth.user.delete',
             'text' => 'Delete User',
             'args' => ['type' => 'member', 'user' => $row],

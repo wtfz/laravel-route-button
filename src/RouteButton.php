@@ -3,7 +3,10 @@
 namespace Wtfz\LaravelRouteButton;
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
 
 /**
  * Trait RouteButton.
@@ -15,29 +18,49 @@ trait RouteButton
      *
      * @return string
      */
-    public function getRouteButtonNameAttribute()
+    public function getLrbNameIdAttribute(): string
     {
         return Str::snake( class_basename( get_class( $this ) ) );
     }
 
     /**
-     * Get model name with id as a toggle key.
+     * Get modal id.
      *
      * @return string
      */
-    public function getRouteButtonToggleAttribute()
+    public function getLrbModalIdAttribute(): string
     {
-        return 'toggle_'.$this->route_button_name .'_'. $this->id;
+        return 'modal_'.$this->lrb_name_id .'_'. $this->id;
     }
 
     /**
-     * Get model name with id as a dropdown key.
+     * Get modal button id.
      *
      * @return string
      */
-    public function getRouteButtonDropdownAttribute()
+    public function getLrbModalButtonIdAttribute(): string
     {
-        return 'dropdown_'.$this->route_button_name .'_'. $this->id;
+        return 'modal_button_'.$this->lrb_name_id .'_'. $this->id;
+    }
+
+    /**
+     * Get toggle id.
+     *
+     * @return string
+     */
+    public function getLrbToggleIdAttribute(): string
+    {
+        return 'toggle_'.$this->lrb_name_id .'_'. $this->id;
+    }
+
+    /**
+     * Get dropdown id.
+     *
+     * @return string
+     */
+    public function getLrbDropdownIdAttribute():string
+    {
+        return 'dropdown_'.$this->lrb_name_id .'_'. $this->id;
     }
 
     /**
@@ -46,41 +69,55 @@ trait RouteButton
      * @param array $route
      * @return object
      */
-    public function prepareRoute($route)
+    public function prepareRoute($route): object
     {
         $methods = Route::getRoutes()->getByName($route['route'])->methods();
         $methods = is_array($methods) ? $methods : [$methods];
 
+        $route['lrb_method'] = '';
         if( in_array( 'DELETE', $methods ) ) {
-            $route['method'] = 'delete';
-            $route['form'] = 'delete';
+            $route['lrb_method'] = 'delete';
         } elseif( in_array( 'PATCH', $methods ) ) {
-            $route['method'] = 'patch';
-            $route['form'] = 'confirm';
+            $route['lrb_method'] = 'patch';
         } elseif( in_array( 'POST', $methods ) ) {
-            $route['method'] = 'post';
-            $route['form'] = 'confirm';
+            $route['lrb_method'] = 'post';
+        }
+
+        if( isset( $route['view'] ) ) {
+            $route['lrb_html'] = View::make( $route['view'] );
         } else {
-            $route['method'] = 'get';
-            $route['form'] = '';
+            if( in_array( $route['lrb_method'], ['delete'] ) ) {
+                $route['lrb_html'] = View::make( 'route-button::_delete' );
+            } elseif( in_array( $route['lrb_method'], ['patch', 'post'] ) ) {
+                $route['lrb_html'] = View::make( 'route-button::_confirm' );
+            } else {
+                $route['lrb_html'] = null;
+            }
         }
 
-        if(!isset($route['args'])) {
-            $route['args'] = $this;
-        }
+        $new_route = [
+            'lrb_method' => $route['lrb_method'],
+            'lrb_html' => $route['lrb_html'],
+            'lrb_toggle_id' => $this->lrb_toggle_id,
+            'lrb_dropdown_id' => $this->lrb_dropdown_id,
+            'lrb_text' => $route['text'] ?? null,
+            'lrb_name' => $route['name'] ?? null,
+            'lrb_args' => $route['args'] ?? $this,
+            'lrb_url' => URL::route( $route['route'], $route['args'] ?? $this ),
+            'lrb_modal_id' => $this->lrb_modal_id,
+            'lrb_modal_button_id' => $this->lrb_modal_button_id,
+        ];
 
-        $route['route'] = route($route['route'], $route['args']);
-
-        return (object) $route;
+        return (object) $new_route;
     }
 
     /**
      * Load list of routes for view.
      * 
      * @param string $section
-     * @return array
+     * @return Collection
      */
-    public function loadRoute($section = '')
+    public function loadRoute($section = ''): Collection
     {
         $routes = collect();
 
@@ -109,12 +146,10 @@ trait RouteButton
      * Render route button view
      * 
      * @param string $section
-     * @return array
+     * @return \Illuminate\Contracts\View\View
      */
     public function routeButton($section = '')
     {
-        return view('route-button::button')
-                    ->with('model', $this)
-                    ->with('routes', $this->loadRoute($section));
+        return View::make('route-button::view')->with('routes', $this->loadRoute($section));
     }
 }
