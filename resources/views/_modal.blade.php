@@ -38,7 +38,7 @@
                 overflow-y: auto; 
                 width: 100%; 
                 height: 100%; 
-                z-index: 50; 
+                z-index: 9999999999; 
                 left: 0; 
                 right: 0; 
                 top: 0; 
