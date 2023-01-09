@@ -95,17 +95,19 @@ trait RouteButton
             }
         }
 
+        $hash = bin2hex(random_bytes(10));
+
         $new_route = [
             'lrb_method' => $route['lrb_method'],
             'lrb_html' => $route['lrb_html'],
-            'lrb_toggle_id' => $this->lrb_toggle_id,
-            'lrb_dropdown_id' => $this->lrb_dropdown_id,
+            'lrb_toggle_id' => $this->lrb_toggle_id.$hash,
+            'lrb_dropdown_id' => $this->lrb_dropdown_id.$hash,
             'lrb_text' => $route['text'] ?? null,
             'lrb_name' => $route['name'] ?? null,
             'lrb_args' => $route['args'] ?? $this,
             'lrb_url' => URL::route( $route['route'], $route['args'] ?? $this ),
-            'lrb_modal_id' => $this->lrb_modal_id,
-            'lrb_modal_button_id' => $this->lrb_modal_button_id,
+            'lrb_modal_id' => $this->lrb_modal_id.$hash,
+            'lrb_modal_button_id' => $this->lrb_modal_button_id.$hash,
         ];
 
         return (object) $new_route;
